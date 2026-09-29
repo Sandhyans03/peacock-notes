@@ -30,3 +30,4 @@ export const shareLinks = pgTable(
   },
   (t) => [index("share_links_note_idx").on(t.noteId)]
 );
+export * from "./auth-schema";
