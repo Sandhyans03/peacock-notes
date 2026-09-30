@@ -3,8 +3,8 @@ import { db } from "../db";
 import { notes, shareLinks } from "../db/schema";
 import { generateAccessKey, generateToken, hashPassword, hashToken, verifyPassword } from "../lib/crypto";
 
-const MAX_FAILED = sql.raw("5");        // wrong passwords allowed
-const LOCK_MINUTES = sql.raw("15");     // lock length after too many wrong passwords
+const MAX_FAILED = sql.raw("5"); // wrong passwords allowed
+const LOCK_MINUTES = sql.raw("15"); // lock length after too many wrong passwords
 
 export type CreateInput = {
   userId: string;
@@ -183,4 +183,3 @@ export async function getOwnedNote(userId: string, noteId: string) {
     .where(eq(shareLinks.noteId, noteId));
   return { note, links };
 }
-

@@ -3,6 +3,7 @@ import { createMiddleware } from "hono/factory";
 import { z } from "zod";
 import { zValidator } from "@hono/zod-validator";
 import { auth } from "./auth";
+import { rateLimit } from "./lib/rate-limit";
 import { accessShare, createNoteWithShare, getOwnedNote, getShareStatus, revokeShare } from "./services/share";
 
 type Env = { Variables: { userId: string } };
@@ -66,6 +67,7 @@ app.get("/share/:token", async (c) => {
 // Public: actually open the link. POST so crawlers and prefetchers can't consume one-time links.
 app.post(
   "/share/:token/access",
+  rateLimit({ limit: Number(process.env.RATE_LIMIT_MAX ?? 20), windowMs: 60_000 }), // default: 20 attempts per minute per IP per link
   zValidator("json", z.object({ password: z.string().max(100).optional() })),
   async (c) => {
     const r = await accessShare(c.req.param("token"), c.req.valid("json").password);
