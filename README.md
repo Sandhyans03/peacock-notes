@@ -18,7 +18,7 @@ PostgreSQL (Neon) + Drizzle ORM, Better Auth (email + password sessions), bcrypt
 3. `npx drizzle-kit migrate` (creates all tables)
 4. `npm run dev` -> http://localhost:3000
 
-Test credentials: (add the account you created)
+Test credentials: email test@example.com / password Test12345
 
 ## Database schema
 - `user`, `session`, `account`, `verification`: Better Auth tables.
